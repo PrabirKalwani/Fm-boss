@@ -64,6 +64,14 @@ button{font-family:inherit;cursor:pointer}
 .block-insight{margin:20px 0 6px;padding:13px 14px;border-radius:8px}
 .insight-label{font-size:8px;letter-spacing:.14em;font-family:monospace;text-transform:uppercase;margin-bottom:5px}
 .insight-text{font-size:13px;color:#C8D4E8;line-height:1.7;font-style:italic}
+.chart-block{margin:0 0 18px;padding:14px;border-radius:8px;background:#111520;border:1px solid #1E2330}
+.chart-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:monospace;margin-bottom:10px}
+.chart-row{display:grid;grid-template-columns:92px 1fr auto;gap:8px;align-items:center;margin-bottom:8px}
+.chart-row:last-child{margin-bottom:0}
+.chart-label{font-size:11px;color:#9AA4B8;font-family:monospace}
+.chart-track{height:10px;background:#0D0F12;border:1px solid #1A1E28;border-radius:999px;overflow:hidden}
+.chart-fill{height:100%;border-radius:999px;min-width:2px}
+.chart-value{font-size:11px;color:#C8D0E0;font-family:monospace}
 
 /* BOTTOM NAV */
 #bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0A0C0F;border-top:1px solid #1A1E28;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:30}
@@ -154,7 +162,20 @@ button{font-family:inherit;cursor:pointer}
 </div>
 
 <script>
+const NPV_CHART_DATA = [["Plan A",-1.11],["Plan B",21.03],["Plan C",62.63]];
+const IRR_CHART_DATA = [["Plan A",14.48],["Plan B",23.54],["Plan C",28.02]];
+
 const steps = [
+  {
+    id:0,title:"FM Project Overview",tag:"FM Project",color:"#38BDF8",
+    summary:"Financial management project dashboard and key outcomes",
+    content:[
+      {type:"para",text:"This FM project evaluates three investment plans for Silico Essential India and recommends the most value-creating option using core capital-budgeting metrics (NPV, IRR, PI, and Payback)."},
+      {type:"chart",title:"Plan Comparison — NPV (₹ Cr)",data:NPV_CHART_DATA},
+      {type:"chart",title:"Plan Comparison — IRR (%)",data:IRR_CHART_DATA},
+      {type:"insight",text:"Plan C leads on both value creation and return spread over WACC, which is why the report's final recommendation favors Plan C."}
+    ]
+  },
   {
     id:1,title:"Company at a Glance",tag:"Introduction",color:"#7EE8A2",
     summary:"What is Silico Essential India?",
@@ -238,6 +259,7 @@ const steps = [
     content:[
       {type:"para",text:"NPV discounts all future cash flows back to today using WACC. If discounted inflows exceed the initial investment, the project creates wealth. Formula: NPV = Σ [CFATₜ / (1 + WACC)ᵗ]"},
       {type:"table",headers:["Plan","PV Inflows","Investment","NPV",""],rows:[["Plan A","₹63.89 Cr","₹65 Cr","−₹1.11 Cr","❌"],["Plan B","₹96.03 Cr","₹75 Cr","+₹21.03 Cr","✅"],["Plan C","₹182.63 Cr","₹120 Cr","+₹62.63 Cr","⭐"]]},
+      {type:"chart",title:"NPV by Plan (₹ Cr)",data:NPV_CHART_DATA},
       {type:"insight",text:"Plan C's NPV of ₹62.63 Cr means investing ₹120 Cr today creates ₹182.63 Cr of present value — a net gain of ₹62.63 Cr in today's rupees."}
     ]
   },
@@ -247,6 +269,7 @@ const steps = [
     content:[
       {type:"para",text:"IRR is the discount rate at which NPV = 0. It's the annualized return the project generates. Rule: if IRR > WACC, the project earns more than it costs — accept it."},
       {type:"table",headers:["Plan","IRR","WACC","Spread",""],rows:[["Plan A","14.48%","15.09%","−0.61%","❌"],["Plan B","23.54%","14.83%","+8.71%","✅"],["Plan C","28.02%","13.50%","+14.52%","⭐"]]},
+      {type:"chart",title:"IRR by Plan (%)",data:IRR_CHART_DATA},
       {type:"para",text:"Plan C's IRR of 28.02% beats its WACC by 14.52 percentage points — the project generates returns nearly double its cost of capital."},
       {type:"insight",text:"Accel India typically targets 25–30% IRR for Series A bets. Plan C's 28.02% hits that mark exactly."}
     ]
@@ -273,6 +296,7 @@ const steps = [
 ];
 
 let current = 0;
+const MIN_BAR_WIDTH_PERCENT = 2;
 
 function color(){ return steps[current].color; }
 
@@ -357,6 +381,28 @@ function renderContent(){
           <div class="insight-label" style="color:${s.color}">KEY INSIGHT</div>
           <p class="insight-text">${block.text}</p>
         </div>`;
+    }
+    else if(block.type==='chart'){
+      const chartData = Array.isArray(block.data) ? block.data : [];
+      html+=`<div class="chart-block"><div class="chart-title" style="color:${s.color}">${block.title||'Chart'}</div>`;
+      if(chartData.length===0){
+        html+=`<p class="block-para" style="margin-bottom:0">No chart data available.</p>`;
+      } else {
+        const max = block.max ?? Math.max(...chartData.map(d=>Math.abs(d[1])));
+        const safeMax = max > 0 ? max : 1;
+        chartData.forEach(([label,value])=>{
+          const width = Math.max((Math.abs(value)/safeMax)*100, MIN_BAR_WIDTH_PERCENT);
+          html+=`
+            <div class="chart-row">
+              <div class="chart-label">${label}</div>
+              <div class="chart-track">
+                <div class="chart-fill" style="width:${width}%;background:${value<0?'#F87171':s.color}"></div>
+              </div>
+              <div class="chart-value">${value.toFixed(2)}</div>
+            </div>`;
+        });
+      }
+      html+=`</div>`;
     }
   });
 
