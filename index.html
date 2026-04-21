@@ -164,7 +164,7 @@ button{font-family:inherit;cursor:pointer}
 <script>
 const steps = [
   {
-    id:"fm-overview",title:"FM Project Overview",tag:"FM Project",color:"#38BDF8",
+    id:0,title:"FM Project Overview",tag:"FM Project",color:"#38BDF8",
     summary:"Financial management project dashboard and key outcomes",
     content:[
       {type:"para",text:"This FM project evaluates three investment plans for Silico Essential India and recommends the most value-creating option using core capital-budgeting metrics (NPV, IRR, PI, and Payback)."},
@@ -380,21 +380,25 @@ function renderContent(){
         </div>`;
     }
     else if(block.type==='chart'){
-      const max = block.max ?? Math.max(...block.data.map(d=>Math.abs(d[1])));
-      const safeMax = max > 0 ? max : 1;
+      const chartData = Array.isArray(block.data) ? block.data : [];
       html+=`<div class="chart-block"><div class="chart-title" style="color:${s.color}">${block.title||'Chart'}</div>`;
-      block.data.forEach(([label,value])=>{
-        let width = (Math.abs(value)/safeMax)*100;
-        if(width>0){ width = Math.max(width, MIN_BAR_WIDTH_PERCENT); }
-        html+=`
-          <div class="chart-row">
-            <div class="chart-label">${label}</div>
-            <div class="chart-track">
-              <div class="chart-fill" style="width:${width}%;background:${value<0?'#F87171':s.color}"></div>
-            </div>
-            <div class="chart-value">${value.toFixed(2)}</div>
-          </div>`;
-      });
+      if(chartData.length===0){
+        html+=`<p class="block-para" style="margin-bottom:0">No chart data available.</p>`;
+      } else {
+        const max = block.max ?? Math.max(...chartData.map(d=>Math.abs(d[1])));
+        const safeMax = max > 0 ? max : 1;
+        chartData.forEach(([label,value])=>{
+          const width = Math.max((Math.abs(value)/safeMax)*100, MIN_BAR_WIDTH_PERCENT);
+          html+=`
+            <div class="chart-row">
+              <div class="chart-label">${label}</div>
+              <div class="chart-track">
+                <div class="chart-fill" style="width:${width}%;background:${value<0?'#F87171':s.color}"></div>
+              </div>
+              <div class="chart-value">${value.toFixed(2)}</div>
+            </div>`;
+        });
+      }
       html+=`</div>`;
     }
   });
