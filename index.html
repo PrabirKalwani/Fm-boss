@@ -164,7 +164,7 @@ button{font-family:inherit;cursor:pointer}
 <script>
 const steps = [
   {
-    id:0,title:"FM Project Overview",tag:"FM Project",color:"#38BDF8",
+    id:"fm-overview",title:"FM Project Overview",tag:"FM Project",color:"#38BDF8",
     summary:"Financial management project dashboard and key outcomes",
     content:[
       {type:"para",text:"This FM project evaluates three investment plans for Silico Essential India and recommends the most value-creating option using core capital-budgeting metrics (NPV, IRR, PI, and Payback)."},
@@ -379,10 +379,11 @@ function renderContent(){
         </div>`;
     }
     else if(block.type==='chart'){
-      const max = block.max || Math.max(...block.data.map(d=>Math.abs(d[1])), 1);
+      const max = block.max ?? Math.max(...block.data.map(d=>Math.abs(d[1])), 1);
+      const MIN_BAR_WIDTH_PCT = 2;
       html+=`<div class="chart-block"><div class="chart-title" style="color:${s.color}">${block.title||'Chart'}</div>`;
       block.data.forEach(([label,value])=>{
-        const width = Math.max((Math.abs(value)/max)*100, 2);
+        const width = Math.max((Math.abs(value)/max)*100, MIN_BAR_WIDTH_PCT);
         html+=`
           <div class="chart-row">
             <div class="chart-label">${label}</div>
