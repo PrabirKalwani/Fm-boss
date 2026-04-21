@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Silico Essential India — Financial Report</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background: #0D0F12; color: #E8EAF0; font-family: Georgia, 'Times New Roman', serif; -webkit-tap-highlight-color: transparent; }
+    #root { height: 100%; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0D0F12; }
+    ::-webkit-scrollbar-thumb { background: #1E2640; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+
+```
+const steps = [
+  {
+    id: 1, title: "Company at a Glance", tag: "Introduction", color: "#7EE8A2",
+    summary: "What is Silico Essential India?",
+    content: [
+      { type: "para", text: "Silico Essential India is a B2B startup founded in January 2025 in Dholera SIR, Gujarat. Backed by Accel India, it manufactures Ultra-High Purity (UHP) Electronic-Grade Chemicals for semiconductor fabs — purified to Parts Per Trillion (PPT) levels." },
+      { type: "table", headers: ["Parameter", "Detail"], rows: [["Founded", "Jan 2025"], ["Location", "Dholera SIR, Gujarat"], ["Backer", "Accel India (VC)"], ["Business", "B2B Manufacturing"], ["Clients", "Tata, Micron, CG Power"]] },
+      { type: "insight", text: "Think of Silico as the chemical backbone for India's chip-making ambitions. No chips get made without these chemicals." }
+    ]
+  },
+  {
+    id: 2, title: "The Problem", tag: "Market Need", color: "#F6A623",
+    summary: "Why does this business need to exist?",
+    content: [
+      { type: "para", text: "India is building massive chip fabs. Tata Electronics alone is investing ₹91,000 Cr in Dholera. Each fab needs huge daily volumes of ultra-pure chemicals. Currently, all of it is imported — creating three critical problems:" },
+      { type: "list", items: ["🕐 Lead Times — Imports take 6–8 weeks. Chemicals degrade in transit.", "💸 Cost Premium — Import duties + logistics add 35–45% over local supply.", "🌐 Supply Risk — Geopolitical shocks can halt fab operations entirely."] },
+      { type: "table", headers: ["Chemical", "Daily Need", "Purity"], rows: [["H₂SO₄", "5,000–8,000 L", "6N"], ["H₂O₂", "3,000–5,000 L", "5N"], ["NH₃", "2,000–3,000 L", "6N"], ["HF", "1,500–2,500 L", "5N"]] },
+      { type: "insight", text: "Silico's fix: build a cleanroom factory in Dholera itself — delivery drops from weeks to hours, cost drops 35–45%." }
+    ]
+  },
+  {
+    id: 3, title: "Market Landscape", tag: "Industry", color: "#A78BFA",
+    summary: "How big is the opportunity?",
+    content: [
+      { type: "para", text: "India's semiconductor market is on a hypergrowth path. The chemical segment alone triples from $2B to $6B by 2030." },
+      { type: "table", headers: ["Year", "Total Mkt", "Chem Seg"], rows: [["2024", "$40B", "$2B"], ["2027", "$65B", "$3.5B"], ["2030", "$110B", "$6B"]] },
+      { type: "list", items: ["🏛 Gujarat Policy: 40% CAPEX subsidy, subsidized land, power tariff cuts.", "🇮🇳 ISM 2.0: Grants for chemical suppliers, low-interest SIDBI loans."] },
+      { type: "insight", text: "Silico's TAM in Gujarat alone is ₹21.6 Cr/year — capturing just 20% of the local chemical market by 2030." }
+    ]
+  },
+  {
+    id: 4, title: "Competition", tag: "Competitors", color: "#F87171",
+    summary: "Who are the rivals and why can Silico win?",
+    content: [
+      { type: "para", text: "Global players (BASF, Merck, Solvay) have quality but suffer from 6–8 week lead times. Domestic companies (SRF, Guj. Fluorochemicals) have scale but lack semiconductor-grade purity lines." },
+      { type: "table", headers: ["Competitor", "Strength", "Weakness"], rows: [["BASF / Merck", "High quality", "6–8 wk delay"], ["SRF / GFL", "Massive scale", "No UHP lines"], ["Silico", "Proximity + purity", "New entrant"]] },
+      { type: "list", items: ["🏭 Greenfield: Built exclusively for semiconductor-grade purity.", "📍 Proximity: Hours — not weeks — to Tata's fab.", "🔒 First-mover: 12–18 month qualification locks in long-term contracts."] },
+      { type: "insight", text: "Once Silico qualifies as a Tier-1 supplier, competitors need 12–18 months just to get certified — a durable moat." }
+    ]
+  },
+  {
+    id: 5, title: "Three Investment Plans", tag: "Capital", color: "#34D399",
+    summary: "How much is needed — and what's the difference?",
+    content: [
+      { type: "para", text: "The report evaluates three investment scenarios — from conservative to aggressive — each representing a different bet on India's semiconductor ramp-up speed." },
+      { type: "table", headers: ["", "Plan A", "Plan B", "Plan C"], rows: [["Investment", "₹65 Cr", "₹75 Cr", "₹120 Cr"], ["Capacity", "1,200 MT", "1,500 MT", "3,000 MT"], ["Yr 1 Rev", "₹10 Cr", "₹12 Cr", "₹15 Cr"], ["Rev Growth", "70%/yr", "90%/yr", "110%/yr"], ["Salvage", "₹6.5 Cr", "₹7.5 Cr", "₹12 Cr"]] },
+      { type: "insight", text: "All plans use straight-line depreciation over 5 years. Plan C's annual depreciation of ₹21.60 Cr is a significant non-cash tax shield." }
+    ]
+  },
+  {
+    id: 6, title: "Financing the Business", tag: "Sources of Finance", color: "#60A5FA",
+    summary: "Where does the money come from?",
+    content: [
+      { type: "table", headers: ["Source", "Plan A", "Plan B", "Plan C"], rows: [["Accel India", "₹35 Cr", "₹40 Cr", "₹60 Cr"], ["Promoters", "₹13.75 Cr", "₹14.53 Cr", "₹12 Cr"], ["SIDBI Loan", "₹12 Cr", "₹15 Cr", "₹35 Cr"], ["Working Cap", "₹4.25 Cr", "₹5.47 Cr", "₹13 Cr"], ["Equity %", "75%", "72.7%", "60%"], ["Debt %", "25%", "27.3%", "40%"]] },
+      { type: "para", text: "The SIDBI loan is subsidized at 8.5–9% p.a. with an 18-month moratorium during construction. Government grants (40% CAPEX subsidy, land, power, stamp duty waiver) reduce net capital burden but are treated separately from debt/equity." },
+      { type: "insight", text: "Plan C takes on more debt (40%) but benefits more from the debt tax shield — key to why it has the lowest cost of capital." }
+    ]
+  },
+  {
+    id: 7, title: "Cost of Capital (WACC)", tag: "Capital Structure", color: "#FBBF24",
+    summary: "What return does the business need to beat?",
+    content: [
+      { type: "para", text: "WACC is the minimum return needed to satisfy both equity investors and debt lenders. It's the hurdle rate — any project must earn more than this to create value." },
+      { type: "para", text: "Formula: WACC = (E/V × Re) + (D/V × Rd × (1 – Tax Rate)). Debt is cheaper after-tax because interest is tax-deductible." },
+      { type: "table", headers: ["", "Plan A", "Plan B", "Plan C"], rows: [["Cost of Equity", "18%", "18%", "18%"], ["Cost of Debt", "8.5%", "8.5%", "9%"], ["After-Tax Debt", "6.38%", "6.38%", "6.75%"], ["Equity Wt.", "75%", "72.7%", "60%"], ["Debt Wt.", "25%", "27.3%", "40%"], ["WACC", "15.09%", "14.83%", "13.50% ✓"]] },
+      { type: "insight", text: "Plan C's higher debt ratio means more financing from cheap after-tax debt (6.75%) vs. expensive equity (18%). This pushes WACC down to 13.50% — the lowest of all three plans." }
+    ]
+  },
+  {
+    id: 8, title: "5-Year Projections", tag: "Financials", color: "#EC4899",
+    summary: "How does money flow over time?",
+    content: [
+      { type: "table", headers: ["Year", "Plan A", "Plan B", "Plan C"], rows: [["Yr 1", "₹10 Cr", "₹12 Cr", "₹15 Cr"], ["Yr 2", "₹17 Cr", "₹22.8 Cr", "₹31.5 Cr"], ["Yr 3", "₹28.9 Cr", "₹43.3 Cr", "₹66.2 Cr"], ["Yr 4", "₹49.1 Cr", "₹82.3 Cr", "₹138.9 Cr"], ["Yr 5", "₹83.5 Cr", "₹156.4 Cr", "₹291.7 Cr"]] },
+      { type: "para", text: "CFAT = EAT + Depreciation + Salvage (Yr 5) − Initial Investment (Yr 0). Depreciation is added back because it's non-cash — it reduces taxable profit but no cash leaves the company." },
+      { type: "table", headers: ["Year", "Plan C CFAT"], rows: [["Yr 0", "−₹120.00 Cr"], ["Yr 1", "+₹22.16 Cr"], ["Yr 2", "+₹27.73 Cr"], ["Yr 3", "+₹39.43 Cr"], ["Yr 4", "+₹63.98 Cr"], ["Yr 5", "+₹127.56 Cr"]] },
+      { type: "insight", text: "Year 1 EBITDA margins look unusually high (149% for Plan C) because ₹21.60 Cr depreciation dominates CFAT at low early revenues. Margins normalize as revenue scales." }
+    ]
+  },
+  {
+    id: 9, title: "NPV Analysis", tag: "Capital Budgeting", color: "#6EE7B7",
+    summary: "Does this project create value in today's money?",
+    content: [
+      { type: "para", text: "NPV discounts all future cash flows back to today using WACC. If discounted inflows exceed the initial investment, the project creates wealth. Formula: NPV = Σ [CFATₜ / (1 + WACC)ᵗ]" },
+      { type: "table", headers: ["Plan", "PV Inflows", "Investment", "NPV", ""], rows: [["Plan A", "₹63.89 Cr", "₹65 Cr", "−₹1.11 Cr", "❌"], ["Plan B", "₹96.03 Cr", "₹75 Cr", "+₹21.03 Cr", "✅"], ["Plan C", "₹182.63 Cr", "₹120 Cr", "+₹62.63 Cr", "⭐"]] },
+      { type: "insight", text: "Plan C's NPV of ₹62.63 Cr means investing ₹120 Cr today creates ₹182.63 Cr of present value — a net gain of ₹62.63 Cr in today's rupees." }
+    ]
+  },
+  {
+    id: 10, title: "IRR Analysis", tag: "Capital Budgeting", color: "#A5B4FC",
+    summary: "What is the project's intrinsic annual return?",
+    content: [
+      { type: "para", text: "IRR is the discount rate at which NPV = 0. It's the annualized return the project generates. Rule: if IRR > WACC, the project earns more than it costs — accept it." },
+      { type: "table", headers: ["Plan", "IRR", "WACC", "Spread", ""], rows: [["Plan A", "14.48%", "15.09%", "−0.61%", "❌"], ["Plan B", "23.54%", "14.83%", "+8.71%", "✅"], ["Plan C", "28.02%", "13.50%", "+14.52%", "⭐"]] },
+      { type: "para", text: "Plan C's IRR of 28.02% beats its WACC by 14.52 percentage points — the project generates returns nearly double its cost of capital." },
+      { type: "insight", text: "Accel India typically targets 25–30% IRR for Series A bets. Plan C's 28.02% hits that mark exactly." }
+    ]
+  },
+  {
+    id: 11, title: "PI, Payback & ARR", tag: "Capital Budgeting", color: "#FCA5A5",
+    summary: "Three more ways to evaluate the investment",
+    content: [
+      { type: "list", items: ["📊 PI = PV of Inflows ÷ Investment. PI > 1 = value-creating. Plan C: 1.522 → every ₹1 invested returns ₹1.52.", "⏱ Simple Payback: Years to recover investment (undiscounted). Plan C: 3.35 years.", "📅 Discounted Payback: Same but PV-adjusted. Plan C: 4.09 years — within the 5-year horizon.", "📈 ARR: Average EAT ÷ Average Investment. Plan C: 48.75%. Good but ignores time value of money."] },
+      { type: "table", headers: ["Metric", "Plan A", "Plan B", "Plan C"], rows: [["PI", "0.983 ❌", "1.280 ✅", "1.522 ⭐"], ["Simple PB", "3.93 yr", "3.47 yr", "3.35 yr"], ["Disc. PB", "Never ❌", "4.34 yr ✅", "4.09 yr ⭐"], ["ARR", "17.44%", "36.51%", "48.75%"]] },
+      { type: "insight", text: "Plan A passes simple payback and ARR but fails every discounted method — proving why ignoring time value of money is dangerous." }
+    ]
+  },
+  {
+    id: 12, title: "Final Verdict", tag: "Conclusion", color: "#7EE8A2",
+    summary: "What should be done — and why?",
+    content: [
+      { type: "para", text: "Every single DCF metric — NPV, IRR, PI, and Discounted Payback — unanimously recommends Plan C. The ₹120 Cr aggressive investment is the financially optimal choice." },
+      { type: "table", headers: ["Metric", "Plan C", "Verdict"], rows: [["NPV", "₹62.63 Cr", "Highest value"], ["IRR", "28.02%", "+14.52pp vs WACC"], ["PI", "1.522", "₹1.52 per ₹1"], ["Simple PB", "3.35 yrs", "Fastest recovery"], ["Disc. PB", "4.09 yrs", "Within horizon"], ["ARR", "48.75%", "Best profitability"], ["WACC", "13.50%", "Lowest cost"]] },
+      { type: "para", text: "If raising ₹120 Cr proves difficult, Plan B (₹75 Cr) is a solid fallback with NPV ₹21.03 Cr and IRR 23.54%." },
+      { type: "insight", text: "The big bet: Tata Electronics hits 50,000 wafers/month, and Silico is the first qualified domestic UHP chemical supplier standing in Gujarat when it does." }
+    ]
+  }
+];
+
+function App() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const step = steps[activeStep];
+  const progress = ((activeStep + 1) / steps.length) * 100;
+
+  const goTo = (i) => { setActiveStep(i); setMenuOpen(false); };
+  const goNext = () => { if (activeStep < steps.length - 1) setActiveStep(s => s + 1); };
+  const goPrev = () => { if (activeStep > 0) setActiveStep(s => s - 1); };
+
+  return (
+    <div style={{ minHeight:"100vh", background:"#0D0F12", color:"#E8EAF0", fontFamily:"Georgia,serif", display:"flex", flexDirection:"column", maxWidth:"480px", margin:"0 auto", position:"relative" }}>
+
+      {/* Top bar */}
+      <div style={{ background:"#0A0C0F", borderBottom:"1px solid #1A1E28", padding:"12px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:50 }}>
+        <div>
+          <div style={{ fontSize:"9px", letterSpacing:"0.12em", color:"#445", fontFamily:"monospace", textTransform:"uppercase" }}>Silico Essential India</div>
+          <div style={{ fontSize:"13px", fontWeight:"bold", color:"#E8EAF0", marginTop:"1px" }}>{step.title}</div>
+        </div>
+        <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
+          <div style={{ fontSize:"18px", fontWeight:"bold", color:step.color, fontFamily:"monospace" }}>
+            {activeStep + 1}<span style={{ color:"#334", fontSize:"12px" }}>/{steps.length}</span>
+          </div>
+          <button onClick={() => setMenuOpen(o => !o)} style={{ background:menuOpen?"#1A2030":"transparent", border:"1px solid #1E2640", borderRadius:"6px", padding:"6px 10px", color:"#889", cursor:"pointer", fontSize:"15px", lineHeight:1 }}>
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
+      </div>
+
+      {/* Progress bar */}
+      <div style={{ height:"2px", background:"#1A1E28", flexShrink:0 }}>
+        <div style={{ height:"100%", width:`${progress}%`, background:step.color, transition:"width 0.35s ease, background 0.3s ease" }} />
+      </div>
+
+      {/* Drawer */}
+      {menuOpen && (
+        <div style={{ position:"fixed", top:"57px", left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:"480px", background:"#0A0C0F", zIndex:40, borderBottom:"1px solid #1E2330", maxHeight:"65vh", overflowY:"auto" }}>
+          {steps.map((s, i) => (
+            <button key={s.id} onClick={() => goTo(i)} style={{ display:"flex", alignItems:"center", width:"100%", padding:"12px 16px", background:i===activeStep?"#141820":"transparent", borderLeft:`3px solid ${i===activeStep?s.color:"transparent"}`, border:"none", borderBottom:"1px solid #111520", cursor:"pointer", gap:"12px", textAlign:"left" }}>
+              <div style={{ width:"24px", height:"24px", borderRadius:"50%", flexShrink:0, background:i===activeStep?s.color:i<activeStep?"#1E2640":"#141820", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"9px", fontFamily:"monospace", fontWeight:"bold", color:i===activeStep?"#0A0C0F":i<activeStep?"#60A5FA":"#445" }}>
+                {i < activeStep ? "✓" : String(i+1).padStart(2,"0")}
+              </div>
+              <div>
+                <div style={{ fontSize:"12px", color:i===activeStep?"#E8EAF0":"#667", fontFamily:"monospace" }}>{s.title}</div>
+                <div style={{ fontSize:"9px", color:i===activeStep?s.color:"#334", fontFamily:"monospace", letterSpacing:"0.08em", marginTop:"2px" }}>{s.tag.toUpperCase()}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Content */}
+      <div style={{ flex:1, overflowY:"auto", padding:"20px 16px 100px" }}>
+        <div style={{ marginBottom:"20px" }}>
+          <span style={{ fontSize:"9px", letterSpacing:"0.14em", color:step.color, fontFamily:"monospace", textTransform:"uppercase", background:`${step.color}18`, padding:"3px 8px", borderRadius:"3px", border:`1px solid ${step.color}35` }}>
+            {step.tag}
+          </span>
+          <h1 style={{ fontSize:"22px", fontWeight:"bold", color:"#E8EAF0", margin:"10px 0 5px", letterSpacing:"-0.02em", lineHeight:1.2 }}>{step.title}</h1>
+          <div style={{ fontSize:"13px", color:"#778", fontStyle:"italic" }}>{step.summary}</div>
+          <div style={{ width:"32px", height:"2px", background:step.color, marginTop:"14px", borderRadius:"1px" }} />
+        </div>
+
+        {step.content.map((block, bi) => {
+          if (block.type === "para") return (
+            <p key={bi} style={{ fontSize:"14px", color:"#B0B8C8", lineHeight:1.75, margin:"0 0 16px" }}>{block.text}</p>
+          );
+          if (block.type === "list") return (
+            <div key={bi} style={{ margin:"0 0 18px" }}>
+              {block.items.map((item, ii) => (
+                <div key={ii} style={{ padding:"10px 12px", marginBottom:"7px", background:"#111520", borderLeft:`3px solid ${step.color}55`, borderRadius:"0 6px 6px 0", fontSize:"13px", color:"#C0C8D8", lineHeight:1.6 }}>{item}</div>
+              ))}
+            </div>
+          );
+          if (block.type === "table") return (
+            <div key={bi} style={{ margin:"0 0 20px", borderRadius:"8px", border:"1px solid #1E2330", overflowX:"auto" }}>
+              <table style={{ width:"100%", borderCollapse:"collapse", fontSize:"11.5px", fontFamily:"monospace" }}>
+                <thead>
+                  <tr>
+                    {block.headers.map((h, hi) => (
+                      <th key={hi} style={{ padding:"9px 10px", background:"#111520", color:step.color, textAlign:hi===0?"left":"center", fontWeight:"bold", fontSize:"9px", letterSpacing:"0.09em", textTransform:"uppercase", borderBottom:`1px solid ${step.color}30`, whiteSpace:"nowrap" }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {block.rows.map((row, ri) => (
+                    <tr key={ri} style={{ background:ri%2===0?"#0D0F12":"#0F1218" }}>
+                      {row.map((cell, ci) => (
+                        <td key={ci} style={{ padding:"8px 10px", color:ci===0?"#C8D0E0":"#9AA4B8", textAlign:ci===0?"left":"center", borderBottom:"1px solid #141820", whiteSpace:"nowrap" }}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+          if (block.type === "insight") return (
+            <div key={bi} style={{ margin:"20px 0 6px", padding:"13px 14px", background:`${step.color}08`, border:`1px solid ${step.color}30`, borderRadius:"8px" }}>
+              <div style={{ fontSize:"8px", letterSpacing:"0.14em", color:step.color, fontFamily:"monospace", textTransform:"uppercase", marginBottom:"5px" }}>KEY INSIGHT</div>
+              <p style={{ fontSize:"13px", color:"#C8D4E8", lineHeight:1.7, margin:0, fontStyle:"italic" }}>{block.text}</p>
+            </div>
+          );
+          return null;
+        })}
+      </div>
+
+      {/* Bottom nav */}
+      <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:"480px", background:"#0A0C0F", borderTop:"1px solid #1A1E28", padding:"10px 16px", display:"flex", alignItems:"center", gap:"10px", zIndex:30 }}>
+        <button onClick={goPrev} disabled={activeStep===0} style={{ padding:"11px 18px", background:activeStep===0?"#111520":"#141C2A", color:activeStep===0?"#2A3040":"#889", border:"1px solid #1E2640", borderRadius:"8px", cursor:activeStep===0?"default":"pointer", fontSize:"14px", fontFamily:"monospace", flexShrink:0 }}>←</button>
+
+        <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:"4px", flexWrap:"wrap" }}>
+          {steps.map((s, i) => (
+            <button key={i} onClick={() => goTo(i)} style={{ width:i===activeStep?"18px":"6px", height:"6px", borderRadius:"3px", background:i===activeStep?step.color:i<activeStep?"#2A3A50":"#1A1E28", border:"none", cursor:"pointer", padding:0, transition:"all 0.25s ease", flexShrink:0 }} />
+          ))}
+        </div>
+
+        <button onClick={goNext} disabled={activeStep===steps.length-1} style={{ padding:"11px 18px", background:activeStep===steps.length-1?"#111520":step.color, color:activeStep===steps.length-1?"#2A3040":"#0A0C0F", border:"none", borderRadius:"8px", cursor:activeStep===steps.length-1?"default":"pointer", fontSize:"14px", fontFamily:"monospace", fontWeight:"bold", flexShrink:0 }}>→</button>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+```
+
+  </script>
+</body>
+</html>
