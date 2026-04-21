@@ -73,6 +73,61 @@ button{font-family:inherit;cursor:pointer}
 #btn-next{border:none}
 #dots{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
 .dot{height:6px;border-radius:3px;border:none;padding:0;cursor:pointer;flex-shrink:0;transition:all .25s ease;background:#1A1E28}
+
+/* DESKTOP */
+@media (min-width: 992px){
+  #app{
+    max-width:1200px;
+    display:grid;
+    grid-template-columns:320px 1fr;
+    grid-template-rows:auto 2px 1fr auto;
+    grid-template-areas:
+      "top top"
+      "progress progress"
+      "drawer content"
+      "drawer bottomnav";
+    border-left:1px solid #1A1E28;
+    border-right:1px solid #1A1E28;
+  }
+
+  #topbar{grid-area:top;position:static;padding:14px 20px}
+  #progress-track{grid-area:progress}
+
+  #drawer{
+    grid-area:drawer;
+    display:block;
+    position:static;
+    top:auto;
+    left:auto;
+    transform:none;
+    width:100%;
+    max-width:none;
+    max-height:none;
+    border-right:1px solid #1E2330;
+    border-bottom:none;
+  }
+
+  #drawer.open{display:block}
+
+  #content{
+    grid-area:content;
+    padding:28px 28px 24px;
+  }
+
+  #bottomnav{
+    grid-area:bottomnav;
+    position:static;
+    left:auto;
+    transform:none;
+    width:100%;
+    max-width:none;
+    padding:12px 20px;
+  }
+
+  #menu-btn{display:none}
+  .step-title{font-size:28px}
+  .block-table{font-size:13px}
+}
 </style>
 
 </head>
