@@ -293,7 +293,7 @@ const steps = [
 ];
 
 let current = 0;
-const MIN_BAR_WIDTH_PCT = 2;
+const MIN_BAR_WIDTH_PERCENT = 2;
 
 function color(){ return steps[current].color; }
 
@@ -384,7 +384,8 @@ function renderContent(){
       const safeMax = max > 0 ? max : 1;
       html+=`<div class="chart-block"><div class="chart-title" style="color:${s.color}">${block.title||'Chart'}</div>`;
       block.data.forEach(([label,value])=>{
-        const width = value === 0 ? 0 : Math.max((Math.abs(value)/safeMax)*100, MIN_BAR_WIDTH_PCT);
+        let width = (Math.abs(value)/safeMax)*100;
+        if(width>0){ width = Math.max(width, MIN_BAR_WIDTH_PERCENT); }
         html+=`
           <div class="chart-row">
             <div class="chart-label">${label}</div>
